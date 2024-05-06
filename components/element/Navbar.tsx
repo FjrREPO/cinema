@@ -8,6 +8,7 @@ function Navbar() {
                 <div className="flex justify-end">
                     <ul>
                         <li>Movies</li>
+                        <li><a href="/admin">Admin</a></li>
                     </ul>
                 </div>
             </div>
