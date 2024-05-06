@@ -1,163 +1,90 @@
-'use client'
+'use client';
 
-import styled, { keyframes } from 'styled-components';
+import { useEffect, useState } from 'react';
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
 const TMDB_TOKEN = process.env.NEXT_PUBLIC_TMDB_TOKEN;
 
 interface Movie {
-    backdrop_path: any;
-    poster_path?: string;
-    title: string;
-    overview: string;
+  backdrop_path: any;
+  poster_path?: string;
+  title: string;
+  overview: string;
 }
 
-const slideAnimation = keyframes`
-  from {
-    opacity: 0;
-    transform: translate(0, 100px);
-    filter: blur(33px);
-  }
+const Banner = () => {
+  const [topMovies, setTopMovies] = useState<Movie[]>([]);
+  const [error, setError] = useState(false);
 
-  to {
-    opacity: 1;
-    transform: translate(0);
-    filter: blur(0);
-  }
-`;
-
-const BannerContainer = styled.div`
-  position: relative;
-  width: 80vw;
-  height: 100vh;
-`;
-
-const SlideItem = styled.div`
-  width: 200px;
-  height: 300px;
-  position: absolute;
-  top: 50%;
-  transform: translate(0, -50%);
-  border-radius: 20px;
-  background-position: 50% 50%;
-  background-size: contain;
-  background-repeat: no-repeat;
-  display: inline-block;
-  transition: 0.5s;
-  border: 2px white solid;
-
-  &:nth-child(1),
-  &:nth-child(2) {
-    top: 0;
-    left: 0;
-    transform: translate(0, 0);
-    border-radius: 0;
-    width: 100%;
-    height: 100%;
-  }
-
-  &:nth-child(3) {
-    left: 50%;
-  }
-
-  &:nth-child(4) {
-    left: calc(50% + 220px);
-    height: 250px;
-    width: 175px;
-  }
-
-  &:nth-child(5) {
-    left: calc(50% + 420px);
-    height: 200px;
-    width: 150px;
-  }
-
-  /* here n = 0, 1, 2, 3,... */
-  &:nth-child(n + 6) {
-    left: calc(50% + 660px);
-    opacity: 0;
-  }
-`;
-
-const Content = styled.div`
-  position: absolute;
-  top: 50%;
-  left: 100px;
-  width: 300px;
-  text-align: left;
-  color: #eee;
-  transform: translate(0, -50%);
-  font-family: system-ui;
-`;
-
-const Name = styled.div`
-  font-size: 40px;
-  text-transform: uppercase;
-  font-weight: bold;
-  opacity: 0;
-  animation: ${slideAnimation} 1s ease-in-out 1 forwards;
-`;
-
-const Description = styled.div`
-  margin-top: 10px;
-  margin-bottom: 20px;
-  opacity: 0;
-  animation: ${slideAnimation} 1s ease-in-out 0.3s 1 forwards;
-`;
-
-const Button = styled.button`
-  padding: 10px 20px;
-  border: none;
-  cursor: pointer;
-  opacity: 0;
-  animation: ${slideAnimation} 1s ease-in-out 0.6s 1 forwards;
-`;
-
-const Banner = async () => {
-    let topMovies = [];
-
-    try {
+  useEffect(() => {
+    const fetchTopMovies = async () => {
+      try {
         const res = await fetch(
-            `https://api.themoviedb.org/3/movie/popular?language=en-US&page=1`,
-            {
-                headers: {
-                    accept: "application/json",
-                    Authorization: `Bearer ${TMDB_TOKEN}`,
-                },
-            }
+          `https://api.themoviedb.org/3/movie/popular?language=en-US&page=1`,
+          {
+            headers: {
+              accept: 'application/json',
+              Authorization: `Bearer ${TMDB_TOKEN}`,
+            },
+          }
         );
 
         if (!res.ok) {
-            throw new Error("Failed to fetch data");
+          throw new Error('Failed to fetch data');
         }
 
         const data = await res.json();
-        topMovies = data.results.slice(0, 5);
-        return (
-            <div className='flex justify-center'>
-                <div className="banner__container">
-                    <div className="slide">
-                        {topMovies?.map((result: Movie, index: number) => (
-                            result.poster_path && (
-                                <SlideItem style={{ background: `url(https://image.tmdb.org/t/p/w1280${result.backdrop_path})` }} key={index}>
-                                    <Content className="content">
-                                        <Name className="name">{result.title}</Name>
-                                        <Description className="des">{result.overview}</Description>
-                                        <Button>See More</Button>
-                                    </Content>
-                                </SlideItem>
-                            )
-                        ))}
-                    </div>
+        const movies = data.results.slice(0, 5);
+        setTopMovies(movies);
+      } catch (error) {
+        setError(true);
+      }
+    };
+
+    fetchTopMovies();
+  }, []);
+
+  if (error) {
+    return <p>Failed to fetch data</p>;
+  }
+
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 1000, // Adjust slide speed (milliseconds)
+    autoplay: true,
+    autoplaySpeed: 6000, // Adjust time each slide is displayed (milliseconds)
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    cssEase: 'linear',
+  };
+
+  return (
+    <div>
+      <Slider {...settings}>
+        {topMovies.map((result: Movie, index: number) => (
+          <div key={index}>
+            {result.backdrop_path && (
+              <div>
+                <img
+                  style={{ width: '100%', height: '100vh', objectFit: 'cover' }}
+                  className=''
+                  src={`https://image.tmdb.org/t/p/w1280${result.backdrop_path}`}
+                  alt={result.title}
+                />
+                <div className='absolute top-[30vh] pl-[5vw] z-50 w-fit' style={{ backdropFilter: 'blur(8px)', backgroundColor: 'rgba(128, 128, 128, 0.7)', padding: '20px', borderRadius: '10px' }}>
+                  <h1 className='w-[30vw] text-[50px]'>{result.title}</h1>
+                  <h1 className='w-[20vw]'>{result.overview}</h1>
                 </div>
-            </div>
-        );
-    } catch (error) {
-        return (
-            <div>
-                <p>Failed to fetch data</p>
-            </div>
-        );
-    }
+              </div>
+            )}
+          </div>
+        ))}
+      </Slider>
+    </div>
+  );
 };
 
 export default Banner;
