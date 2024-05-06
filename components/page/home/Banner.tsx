@@ -1,9 +1,10 @@
-'use client';
+'use client'
 
 import { useEffect, useState } from 'react';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import CarouselItem from '@/components/element/Carousel'
 
 const TMDB_TOKEN = process.env.NEXT_PUBLIC_TMDB_TOKEN;
 
@@ -12,6 +13,7 @@ interface Movie {
   poster_path?: string;
   title: string;
   overview: string;
+  id: number;
 }
 
 const Banner = () => {
@@ -64,23 +66,7 @@ const Banner = () => {
   return (
     <div>
       <Slider {...settings}>
-        {topMovies.map((result: Movie, index: number) => (
-          <div key={index}>
-            {result.backdrop_path && (
-              <div>
-                <img
-                  style={{ width: '100%', height: '100vh', objectFit: 'cover' }}
-                  className=''
-                  src={`https://image.tmdb.org/t/p/w1280${result.backdrop_path}`}
-                  alt={result.title}
-                />
-                <div className='absolute top-[30vh] pl-[5vw] z-50 w-fit' style={{ backdropFilter: 'blur(8px)', backgroundColor: 'rgba(128, 128, 128, 0.7)', padding: '20px', borderRadius: '10px' }}>
-                  <h1 className='w-[30vw] text-[50px]'>{result.title}</h1>
-                  <h1 className='w-[20vw]'>{result.overview}</h1>
-                </div>
-              </div>
-            )}
-          </div>
+        {topMovies.map((movie, index) => (<CarouselItem key={index} movie={movie} />
         ))}
       </Slider>
     </div>

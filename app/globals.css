@@ -26,6 +26,7 @@ body {
     rgb(var(--background-start-rgb));
     
   overflow-x: hidden;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 @layer utilities {

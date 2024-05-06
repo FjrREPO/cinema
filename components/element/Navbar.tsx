@@ -1,6 +1,6 @@
 function Navbar() {
     return (
-        <div className="absolute inset-0 z-50">
+        <div className="absolute inset-0 z-30">
             <div className="flex flex-row w-full justify-between p-5">
                 <div className="flex">
                     <img src="https://w7.pngwing.com/pngs/989/129/png-transparent-google-logo-google-search-meng-meng-company-text-logo.png" width="60px" alt="" />
