@@ -20,12 +20,11 @@ const CarouselItemImage = ({ movie }: { movie: Movie }) => {
 const CarouselItemContent = ({ movie }: { movie: Movie }) => {
     return (
         <div
-            className='absolute bottom-[5vh] ml-[3vw] pl-[5vw] z-20 w-fit'
+            className='absolute bottom-[5vh] pl-[5vw] z-20 w-fit rounded-tr-[10px] rounded-br-[10px]'
             style={{
                 backdropFilter: 'blur(8px)',
                 backgroundColor: 'rgba(128, 128, 128, 0.7)',
                 padding: '20px',
-                borderRadius: '10px',
             }}
         >
             <h1 className='w-[60vw] lg:w-[30vw] text-[50px] z-30'>{movie.title}</h1>
