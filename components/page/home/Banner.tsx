@@ -52,15 +52,36 @@ const Banner = () => {
     return <p>Failed to fetch data</p>;
   }
 
+  const CustomPrevArrow = (props: any) => {
+    const { className, style, onClick } = props;
+    return (
+      <div className={className} style={{ ...style, display: "block", background: "red", zIndex: 40 }} onClick={onClick}>
+        Previous
+      </div>
+    );
+  };
+  
+  const CustomNextArrow = (props: any) => {
+    const { className, style, onClick } = props;
+    return (
+      <div className={className} style={{ ...style, display: "block", background: "green", zIndex: 40 }} onClick={onClick}>
+        Next
+      </div>
+    );
+  };
+  
+
   const settings = {
     dots: true,
     infinite: true,
-    speed: 1000, // Adjust slide speed (milliseconds)
+    speed: 1000,
     autoplay: true,
-    autoplaySpeed: 6000, // Adjust time each slide is displayed (milliseconds)
+    autoplaySpeed: 6000,
     slidesToShow: 1,
     slidesToScroll: 1,
     cssEase: 'linear',
+    prevArrow: <CustomPrevArrow />,
+    nextArrow: <CustomNextArrow />
   };
 
   return (
