@@ -32,6 +32,10 @@ body {
   }
 }
 
+.swiper-slide {
+  margin: 0 !important;
+}
+
 .box {
   position: relative;
 }

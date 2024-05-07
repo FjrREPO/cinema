@@ -1,63 +1,87 @@
-import { Card, CardBody, CardFooter, Image, Link } from "@nextui-org/react";
+'use client'
 
-const TMDB_TOKEN = process.env.NEXT_PUBLIC_TMDB_TOKEN;
+import { Swiper, SwiperSlide } from 'swiper/react';
 
-const TopMovies = async () => {
-    let topMovies = [];
+import 'swiper/css'; import 'swiper/css/effect-coverflow'; import 'swiper/css/pagination';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import { useEffect, useState } from 'react';
+import { Navigation, Pagination } from 'swiper/modules';
 
-    try {
-        const res = await fetch(
-            `https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1`,
-            {
-                headers: {
-                    accept: "application/json",
-                    Authorization: `Bearer ${TMDB_TOKEN}`,
-                },
+interface Movie {
+    backdrop_path: any;
+    poster_path?: string;
+    title: string;
+    overview: string;
+    id: number;
+}
+
+const TopMovies = () => {
+    const TMDB_TOKEN = process.env.NEXT_PUBLIC_TMDB_TOKEN;
+    const MAX_POPULAR_MOVIES = 20;
+
+    const [popularMovies, setPopularMovies] = useState<Movie[]>([]);
+    const [error, setError] = useState(false);
+
+    const fetchPopularMovies = async () => {
+        try {
+            const res = await fetch(
+                `https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1`,
+                {
+                    headers: {
+                        accept: 'application/json',
+                        Authorization: `Bearer ${TMDB_TOKEN}`,
+                    },
+                }
+            );
+
+            if (!res.ok) {
+                throw new Error('Failed to fetch data');
             }
-        );
 
-        if (!res.ok) {
-            throw new Error("Failed to fetch data");
+            const data: { results: Movie[] } = await res.json();
+            return data.results.slice(0, MAX_POPULAR_MOVIES);
+        } catch (error) {
+            setError(true);
+            console.error(error);
+            return [];
         }
+    };
 
-        const data = await res.json();
-        topMovies = data.results.slice(0, 5);
-        return (
-            <div className=" flex flex-col">
-                <h1 className="mb-[10px]">TopMovies</h1>
-                <div className="justify-center">
-                    <div className="gap-1 grid grid-cols-2 sm:grid-cols-5 justify-center w-full">
-                        {topMovies.map((result: any, index: any) => (
-                            <Link href={`/movie/${result.id}`} key={index}>
-                                <Card shadow="sm">
-                                    <CardBody className="overflow-visible p-0">
-                                        <Image
-                                            shadow="sm"
-                                            radius="lg"
-                                            width="100%"
-                                            alt={result.title}
-                                            className="w-full object-cover rounded-[10px] h-full max-w-[15vw] m-auto"
-                                            src={`https://image.tmdb.org/t/p/w500${result.poster_path}`}
-                                        />
-                                    </CardBody>
-                                    <CardFooter className="flex-col text-small justify-between items-center">
-                                        <b>{result.title}</b>
-                                        <p className="text-default-500 justify-center">{result.release_date}</p>
-                                    </CardFooter>
-                                </Card>
-                            </Link>
-                        ))}
-                    </div>
-                </div>
-            </div>
-        );
-    } catch (error) {
-        return (
-            <div>
-                <p>Failed to fetch data</p>
-            </div>
-        );
+    useEffect(() => {
+        fetchPopularMovies().then((movies) => setPopularMovies(movies));
+    }, []);
+
+    if (error) {
+        return <div>Error</div>;
     }
+
+    return (
+        <div>
+            <h1 className="mt-[50px] mb-[10px] text-[50px]">TOP MOVIES</h1>
+            <Swiper
+                slidesPerView={5}
+                spaceBetween={50}
+                pagination={{
+                    clickable: true,
+                }}
+                modules={[Pagination, Navigation]}
+                navigation={true}
+            >
+                {popularMovies.map((result, index) => (
+                    <SwiperSlide key={index} className=''>
+                        <a href={`/movie/${result.id}`}>
+                            <img
+                                src={`https://image.tmdb.org/t/p/w500${result.poster_path}`}
+                                className='w-[240px] rounded'
+                            />
+                        </a>
+                    </SwiperSlide>
+                ))}
+            </Swiper>
+        </div>
+    );
 };
 
 export default TopMovies;

@@ -9,7 +9,7 @@ interface Movie {
 const CarouselItemImage = ({ movie }: { movie: Movie }) => {
     return (
         <img
-            style={{ width: '100%', height: '100vh', objectFit: 'cover' }}
+            style={{ width: '100%', height: '80vh', objectFit: 'cover' }}
             className='z-10'
             src={`https://image.tmdb.org/t/p/w1280${movie.backdrop_path}`}
             alt={movie.title}
@@ -23,7 +23,7 @@ const CarouselItemContent = ({ movie }: { movie: Movie }) => {
             className='absolute bottom-[5vh] pl-[5vw] z-20 w-fit rounded-tr-[10px] rounded-br-[10px]'
             style={{
                 backdropFilter: 'blur(8px)',
-                backgroundColor: 'rgba(128, 128, 128, 0.7)',
+                backgroundColor: 'rgba(128, 128, 128, 0.4)',
                 padding: '20px',
             }}
         >

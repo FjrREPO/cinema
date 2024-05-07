@@ -2,7 +2,7 @@ import { FaSearch } from "react-icons/fa";
 
 function Navbar() {
     return (
-        <div className="absolute inset-0 z-30">
+        <div className="absolute inset-0 z-30 h-fit">
             <div className="flex flex-row w-full justify-between p-5"
                 style={{
                     backgroundColor: 'rgba(128, 128, 128, 0.2)',

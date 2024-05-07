@@ -1,10 +1,13 @@
 'use client'
 
 import { useEffect, useState } from 'react';
-import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
-import CarouselItem from '@/components/element/Carousel'
+import { Navigation, A11y, EffectFade, Autoplay, Thumbs, FreeMode } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import 'swiper/css/effect-fade';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import CarouselItem from '@/components/element/Carousel';
 
 const TMDB_TOKEN = process.env.NEXT_PUBLIC_TMDB_TOKEN;
 
@@ -16,81 +19,89 @@ interface Movie {
   id: number;
 }
 
+const fetchTopMovies = async (): Promise<Movie[]> => {
+  try {
+    const res = await fetch(
+      `https://api.themoviedb.org/3/movie/popular?language=en-US&page=1`,
+      {
+        headers: {
+          accept: 'application/json',
+          Authorization: `Bearer ${TMDB_TOKEN}`,
+        },
+      }
+    );
+
+    if (!res.ok) {
+      throw new Error('Failed to fetch data');
+    }
+
+    const data: { results: Movie[] } = await res.json();
+    return data.results.slice(0, 5);
+  } catch (error) {
+    throw error;
+  }
+};
+
 const Banner = () => {
   const [topMovies, setTopMovies] = useState<Movie[]>([]);
   const [error, setError] = useState(false);
+  const [thumbsSwiper, setThumbsSwiper] = useState<typeof Swiper | null>(null);
 
   useEffect(() => {
-    const fetchTopMovies = async () => {
-      try {
-        const res = await fetch(
-          `https://api.themoviedb.org/3/movie/popular?language=en-US&page=1`,
-          {
-            headers: {
-              accept: 'application/json',
-              Authorization: `Bearer ${TMDB_TOKEN}`,
-            },
-          }
-        );
-
-        if (!res.ok) {
-          throw new Error('Failed to fetch data');
-        }
-
-        const data = await res.json();
-        const movies = data.results.slice(0, 5);
-        setTopMovies(movies);
-      } catch (error) {
-        setError(true);
-      }
-    };
-
-    fetchTopMovies();
+    fetchTopMovies()
+      .then((movies) => setTopMovies(movies))
+      .catch((error) => setError(true));
   }, []);
 
   if (error) {
-    return <p>Failed to fetch data</p>;
+    return <div>Error</div>;
   }
 
-  const CustomPrevArrow = (props: any) => {
-    const { className, style, onClick } = props;
-    return (
-      <div className={className} style={{ ...style, display: "block", background: "red", zIndex: 40 }} onClick={onClick}>
-        Previous
-      </div>
-    );
-  };
-  
-  const CustomNextArrow = (props: any) => {
-    const { className, style, onClick } = props;
-    return (
-      <div className={className} style={{ ...style, display: "block", background: "green", zIndex: 40 }} onClick={onClick}>
-        Next
-      </div>
-    );
-  };
-  
-
-  const settings = {
-    dots: true,
-    infinite: true,
-    speed: 1000,
-    autoplay: true,
-    autoplaySpeed: 6000,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    cssEase: 'linear',
-    prevArrow: <CustomPrevArrow />,
-    nextArrow: <CustomNextArrow />
-  };
-
   return (
-    <div>
-      <Slider {...settings}>
-        {topMovies.map((movie, index) => (<CarouselItem key={index} movie={movie} />
+    <>
+      <Swiper
+        modules={[FreeMode, Autoplay, EffectFade, A11y, Thumbs]}
+        spaceBetween={50}
+        slidesPerView={1}
+        autoplay={{
+          delay: 2500,
+          disableOnInteraction: false,
+        }}
+        effect={'fade'}
+        loop={true}
+        thumbs={{ swiper: thumbsSwiper }}
+        onSwiper={(swiper) => console.log(swiper)}
+        onSlideChange={() => console.log('slide change')}
+      >
+        {topMovies.map((movie, index) => (
+          <SwiperSlide key={index}>
+            <CarouselItem movie={movie} />
+          </SwiperSlide>
         ))}
-      </Slider>
-    </div>
+      </Swiper>
+      <Swiper
+        onSwiper={setThumbsSwiper}
+        spaceBetween={10}
+        slidesPerView={4}
+        freeMode={true}
+        loop={true}
+        watchSlidesProgress={true}
+        modules={[FreeMode, Navigation, Thumbs]}
+        className="mySwiper"
+      >
+        {topMovies.map((movie, index) => (
+          <SwiperSlide key={index}>
+            <img
+              style={{ width: '25vw', height: '20vh', objectFit: 'cover' }}
+              className='z-10'
+              src={`https://image.tmdb.org/t/p/w500${movie.backdrop_path}`}
+              alt={movie.title}
+              loading="lazy"
+            />
+          </SwiperSlide>
+        ))}
+      </Swiper>
+    </>
   );
 };
 
