@@ -1,22 +1,8 @@
-import Image from 'next/image';
+import Trailer from '@/components/data/Trailer';
 import { IoMdArrowRoundBack } from "react-icons/io";
 
 interface MovieParams {
     id: string;
-}
-
-interface MovieData {
-    title?: string;
-    name?: string;
-    backdrop_path?: string;
-    poster_path?: string;
-    overview?: string;
-    release_date?: string;
-    first_air_date?: string;
-    vote_count?: number;
-    production_companies?: {
-        logo_path?: string;
-    }[];
 }
 
 const fetchMovieData = async (movieId: string) => {
@@ -41,24 +27,22 @@ const MovieDetails = async ({ params }: { params: MovieParams }) => {
 
     return (
         <div
-            className="w-full bg-cover"
+            className="w-full bg-cover min-h-[100vh]"
             style={{
                 backgroundImage: `url(https://image.tmdb.org/t/p/w1280${movieData.backdrop_path})`
             }}
         >
-            <div className='bg-black/50'>
+            <div className='bg-black/50 min-h-[100vh]'>
                 <button className='absolute top-[5%] left-[2%]'>
                     <a href="/"><IoMdArrowRoundBack className='w-[50px] h-[50px]' /></a>
                 </button>
                 <div
                     className="p-4 md:pt-8 flex flex-col md:flex-row content-center max-w-6xl mx-auto md:space-x-6"
                 >
-                    <Image
+                    <img
                         src={`https://image.tmdb.org/t/p/w500${movieData.poster_path}`}
-                        width={400}
-                        height={250}
                         className="rounded-lg"
-                        style={{ maxWidth: '100%', minHeight: '100%' }}
+                        style={{ width: '100%', height: '90vh' }}
                         alt=""
                     />
                     <div className="p-2 h-fit rounded-[20px]"
@@ -79,32 +63,20 @@ const MovieDetails = async ({ params }: { params: MovieParams }) => {
                             <span className="font-semibold mr-1">Rating:</span>
                             {movieData.vote_count}
                         </p>
-                        {movieData.production_companies && (
-                            <ProductionCompanies companies={movieData.production_companies} />
-                        )}
-                        <div className='flex justify-center'>
+                        <div className='flex flex-col gap-3'>
+                            <span className='font-bold'>Genre:</span>
+                            <div className='flex flex-row gap-3'>
+                                {movieData.genres?.map((genre: any) => (
+                                    <p key={genre.id} className='px-5 py-2 bg-white text-black rounded-[20px] font-bold'>{genre.name}</p>
+                                ))}
+                            </div>
+                        </div>
+                        <div className='flex flex-row gap-5 justify-center'>
+                            <Trailer movieId={`${movieData.id}`} />
                             <a href={`/movie/${movieData.id}/order`}><button className='movie__btn mt-10 px-20 py-5 bg-[#e6bc17] rounded-[20px] font-bold'>Pesan Tiket</button></a>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    );
-};
-
-const ProductionCompanies = ({ companies }: { companies: MovieData['production_companies'] }) => {
-    return (
-        <div className='flex flex-col gap-5'>
-            <h1 className='flex font-bold text-[20px]'>Production Companies</h1>
-            <div className='movie__logo grid grid-cols-3 md:grid-cols-1 lg:grid-cols-3 gap-x-10 lg:gap-x-20 gap-y-5 items-center justify-center xl:grid-cols-3'>
-                {companies?.map((company) => (
-                    <div key={company.logo_path} className='bg-white max-w-[50vw] md:min-w-[15vw] md:max-w-[40vw] lg:max-w-[20vw] xl:max-w-[10vw] p-10 rounded-[20px]'>
-                        <img
-                            src={`https://image.tmdb.org/t/p/w500${company.logo_path}`}
-                            alt="Production Company Logo"
-                        />
-                    </div>
-                ))}
             </div>
         </div>
     );

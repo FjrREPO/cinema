@@ -1,6 +1,8 @@
 'use client';
 
+import SearchCard from '@/components/page/search/SearchCard';
 import { useState, useEffect } from 'react';
+import { IoMdArrowRoundBack } from "react-icons/io";
 
 const API_KEY = process.env.NEXT_PUBLIC_TMDB_API
 
@@ -30,7 +32,7 @@ const SearchPage = ({ params }: SearchPageProps) => {
                 const response = await fetch(apiUrl);
                 const data = await response.json();
                 setMovies(data.results);
-                console.log(`QUERY = ${searchTerm} && ${apiUrl}`)
+                console.log(`QUERY = ${apiUrl} && ${apiUrl}`)
             } catch (error) {
                 setError('Failed to fetch movies. Please try again later.');
             }
@@ -48,12 +50,17 @@ const SearchPage = ({ params }: SearchPageProps) => {
 
     return (
         <div>
-            {movies.map((movie) => (
-                <div key={movie.id}>
-                    <h1>{movie.title}</h1>
-                    {/* <img src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} alt={movie.title} /> */}
-                </div>
-            ))}
+            <button className='absolute top-[5%] left-[2%]'>
+                <a href="/"><IoMdArrowRoundBack className='w-[50px] h-[50px]' /></a>
+            </button>
+            <div className="flex text-xl justify-center mt-10 mb-10">Search Result for : "{params.searchTerm}"</div>
+            <div className='flex flex-col justify-center items-center gap-10'>
+                {movies.map((movie) => (
+                    <div key={movie.id}>
+                        <SearchCard movie={movie} searchParams={params.searchTerm} />
+                    </div>
+                ))}
+            </div>
         </div>
     );
 };

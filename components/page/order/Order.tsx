@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
+import Payment from '@/components/element/Payment';
 
 interface Movie {
     id: string;
@@ -52,39 +53,41 @@ function Order({ movieId }: { movieId: string }) {
                             backgroundImage: `url(https://image.tmdb.org/t/p/w1280${movie.backdrop_path})`
                         }}
                     >
-                        <div className='bg-black/50'>
-                            <h2>{movie.title}</h2>
-                            <p>{movie.overview}</p>
-                            <table className="border-2 table-auto border-collapse border-white">
+                        <div className='flex flex-col bg-black/50 min-h-[100vh] items-center justify-center'>
+                            <h1 className='flex justify-center text-xl font-bold mb-5'>{movie.title}</h1>
+                            <table className="border border-white border-collapse border-[4px] w-[80vw] text-center">
                                 <thead>
                                     <tr>
-                                        <th className='p-5'>Jenis Paket</th>
-                                        <th className='p-5'>Kapasitas</th>
-                                        <th className='p-5'>Ukuran Layar</th>
-                                        <th className='p-5'>Harga</th>
+                                        <th className="px-5 py-3 border-b border-r border-white">Jenis Paket</th>
+                                        <th className="px-5 py-3 border-b border-r border-white">Kapasitas</th>
+                                        <th className="px-5 py-3 border-b border-r border-white">Ukuran Layar</th>
+                                        <th className="px-5 py-3 border-b border-r border-white">Harga</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td className='p-5'>regular </td>
-                                        <td className='p-5'>4 orang</td>
-                                        <td className='p-5'>42 inch</td>
-                                        <td className='p-5'>100.000</td>
+                                        <td className="px-5 py-3 border-r border-b border-white">REGULAR</td>
+                                        <td className="px-5 py-3 border-r border-b border-white">4 orang</td>
+                                        <td className="px-5 py-3 border-r border-b border-white">42 inch</td>
+                                        <td className="px-5 py-3 border-r border-b border-white">100.000</td>
                                     </tr>
                                     <tr>
-                                        <td className='p-5'>VIP</td>
-                                        <td className='p-5'>8 orang</td>
-                                        <td className='p-5'>55 inch</td>
-                                        <td className='p-5'>130.000</td>
+                                        <td className="px-5 py-3 border-r border-b border-white">VIP</td>
+                                        <td className="px-5 py-3 border-r border-b border-white">8 orang</td>
+                                        <td className="px-5 py-3 border-r border-b border-white">55 inch</td>
+                                        <td className="px-5 py-3 border-r border-b border-white">180.000</td>
                                     </tr>
                                     <tr>
-                                        <td className='p-5'>VVIP</td>
-                                        <td className='p-5'>16 orang</td>
-                                        <td className='p-5'>70 inch</td>
-                                        <td className='p-5'>280.000</td>
+                                        <td className="px-5 py-3 border-r border-b border-white">VVIP</td>
+                                        <td className="px-5 py-3 border-r border-b border-white">16 orang</td>
+                                        <td className="px-5 py-3 border-r border-b border-white">70 inch</td>
+                                        <td className="px-5 py-3 border-r border-b border-white">260.000</td>
                                     </tr>
                                 </tbody>
                             </table>
+                            <div className='mt-10'>
+                                <Payment/>
+                            </div>
                         </div>
                     </div>
                 ) : (
