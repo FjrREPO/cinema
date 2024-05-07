@@ -45,6 +45,10 @@ export default async function MovieDetails({ params }: { params: MovieParams }) 
                         <span className='font-semibold mr-1'>Rating:</span>
                         {movie.vote_count}
                     </p>
+                    <div>
+                        <h1>production</h1>
+                        <img src={`https://image.tmdb.org/t/p/w500${movie.production_companies[0].logo_path}`} alt="" />
+                    </div>
                 </div>
             </div>
         </div>

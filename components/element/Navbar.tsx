@@ -3,7 +3,7 @@ import SearchBox from "./SearchBox";
 function Navbar() {
     return (
         <div className="absolute inset-0 z-30 h-fit">
-            <div className="flex flex-row w-full justify-between p-5"
+            <div className="flex flex-row w-full justify-between p-5 items-center"
                 style={{
                     backgroundColor: 'rgba(128, 128, 128, 0.2)',
                 }}
@@ -12,6 +12,9 @@ function Navbar() {
                     <img src="https://w7.pngwing.com/pngs/989/129/png-transparent-google-logo-google-search-meng-meng-company-text-logo.png" width="60px" alt="" />
                 </div>
                 <SearchBox />
+                <div>
+                    <a href="/login">Login</a>
+                </div>
             </div>
             <div className="flex flex-row w-full justify-between px-5"
                 style={{
