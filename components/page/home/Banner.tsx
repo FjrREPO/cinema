@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react';
-import { Navigation, A11y, EffectFade, Autoplay, Thumbs, FreeMode } from 'swiper/modules';
+import { Navigation, EffectFade, Autoplay, Thumbs } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/effect-fade';
@@ -46,12 +46,24 @@ const Banner = () => {
   const [topMovies, setTopMovies] = useState<Movie[]>([]);
   const [error, setError] = useState(false);
   const [thumbsSwiper, setThumbsSwiper] = useState<typeof Swiper | null>(null);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   useEffect(() => {
     fetchTopMovies()
       .then((movies) => setTopMovies(movies))
       .catch((error) => setError(true));
   }, []);
+
+  const removeImage = (index: number) => {
+    const imageElement = document.getElementById(`image-${index}`);
+    if (imageElement) {
+      imageElement.remove();
+    }
+  };
+
+  const handleSlideChange = (swiper: any) => {
+    setCurrentImageIndex(swiper.realIndex);
+  };
 
   if (error) {
     return <div>Error</div>;
@@ -60,8 +72,7 @@ const Banner = () => {
   return (
     <>
       <Swiper
-        modules={[FreeMode, Autoplay, EffectFade, A11y, Thumbs]}
-        spaceBetween={50}
+        modules={[Autoplay, EffectFade, Thumbs]}
         slidesPerView={1}
         autoplay={{
           delay: 2500,
@@ -71,29 +82,28 @@ const Banner = () => {
         loop={true}
         thumbs={{ swiper: thumbsSwiper }}
         onSwiper={(swiper) => console.log(swiper)}
-        onSlideChange={() => console.log('slide change')}
+        onSlideChange={handleSlideChange}
       >
         {topMovies.map((movie, index) => (
           <SwiperSlide key={index}>
-            <CarouselItem movie={movie} />
+            {index === currentImageIndex && (
+              <div id={`image-${index}`}>
+                <CarouselItem movie={movie} />
+              </div>
+            )}
           </SwiperSlide>
         ))}
       </Swiper>
       <Swiper
         onSwiper={setThumbsSwiper}
-        spaceBetween={10}
         slidesPerView={4}
-        freeMode={true}
-        loop={true}
-        watchSlidesProgress={true}
-        modules={[FreeMode, Navigation, Thumbs]}
+        modules={[Navigation, Thumbs]}
         className="mySwiper"
       >
         {topMovies.map((movie, index) => (
           <SwiperSlide key={index}>
             <img
               style={{ width: '25vw', height: '20vh', objectFit: 'cover' }}
-              className='z-10'
               src={`https://image.tmdb.org/t/p/w500${movie.backdrop_path}`}
               alt={movie.title}
               loading="lazy"
@@ -101,6 +111,11 @@ const Banner = () => {
           </SwiperSlide>
         ))}
       </Swiper>
+      {useEffect(() => {
+        if (currentImageIndex > 0) {
+          removeImage(currentImageIndex - 1);
+        }
+      }, [currentImageIndex])}
     </>
   );
 };
