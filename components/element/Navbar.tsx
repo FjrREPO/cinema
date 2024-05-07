@@ -1,4 +1,4 @@
-import { FaSearch } from "react-icons/fa";
+import SearchBox from "./SearchBox";
 
 function Navbar() {
     return (
@@ -11,12 +11,7 @@ function Navbar() {
                 <div className="flex">
                     <img src="https://w7.pngwing.com/pngs/989/129/png-transparent-google-logo-google-search-meng-meng-company-text-logo.png" width="60px" alt="" />
                 </div>
-                <div className="box">
-                    <form name="search">
-                        <input type="text" className="navbar__input" name="txt" />
-                    </form>
-                    <FaSearch className="navbar__search" />
-                </div>
+                <SearchBox />
             </div>
             <div className="flex flex-row w-full justify-between px-5"
                 style={{

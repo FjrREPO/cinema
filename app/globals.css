@@ -53,7 +53,8 @@ body {
   transition: .5s;
 }
 
-.box:hover .navbar__input {
+.box:hover .navbar__input,
+.navbar__input:not(:placeholder-shown) {
   width: 350px;
   background: #ffffff;
   color: #000;
