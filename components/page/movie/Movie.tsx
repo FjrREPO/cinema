@@ -73,7 +73,7 @@ const MovieDetails = async ({ params }: { params: MovieParams }) => {
                         </div>
                         <div className='flex flex-row gap-5 justify-center'>
                             <Trailer movieId={`${movieData.id}`} />
-                            <a href={`/movie/${movieData.id}/order`}><button className='movie__btn mt-10 px-20 py-5 bg-[#e6bc17] rounded-[20px] font-bold'>Pesan Tiket</button></a>
+                            <a href={`/movie/${movieData.id}/order`}><button className='movie__btn mt-10 px-20 py-5 bg-[#e6bc17] rounded-[20px] font-bold'>Order Ticket</button></a>
                         </div>
                     </div>
                 </div>
