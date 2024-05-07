@@ -57,7 +57,7 @@ const SearchPage = ({ params }: SearchPageProps) => {
             <div className='flex flex-col justify-center items-center gap-10'>
                 {movies.map((movie) => (
                     <div key={movie.id}>
-                        <SearchCard movie={movie} searchParams={params.searchTerm} />
+                        <SearchCard movie={movie} />
                     </div>
                 ))}
             </div>
