@@ -46,13 +46,13 @@ const fetchTopMovies = async (): Promise<Movie[]> => {
 const Banner = () => {
   const [topMovies, setTopMovies] = useState<Movie[]>([]);
   const [error, setError] = useState(false);
-  const [thumbsSwiper, setThumbsSwiper] = useState<typeof Swiper | null>(null);
+  const [thumbsSwiperRef, setThumbsSwiperRef] = useState<any>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   useEffect(() => {
     fetchTopMovies()
-     .then((movies) => setTopMovies(movies))
-     .catch((error) => {
+      .then((movies) => setTopMovies(movies))
+      .catch((error) => {
         console.error(error);
         setError(true);
       });
@@ -77,7 +77,7 @@ const Banner = () => {
         }}
         effect={'fade'}
         loop={true}
-        thumbs={{ swiper: thumbsSwiper }}
+        thumbs={{ swiper: thumbsSwiperRef }}
         onSwiper={(swiper) => console.log(swiper)}
         onSlideChange={handleSlideChange}
       >
@@ -92,7 +92,7 @@ const Banner = () => {
         ))}
       </Swiper>
       <Swiper
-        onSwiper={setThumbsSwiper}
+        onSwiper={setThumbsSwiperRef}
         slidesPerView={4}
         modules={[Navigation, Thumbs]}
         className="mySwiper"
