@@ -21,14 +21,14 @@ const CarouselItemContent = ({ movie }: { movie: Movie }) => {
         <div
             className='absolute bottom-[5vh] pl-[5vw] w-fit rounded-tr-[10px] rounded-br-[10px]'
             style={{
-                backdropFilter: 'blur(8px)',
-                backgroundColor: 'rgba(128, 128, 128, 0.4)',
+                backdropFilter: 'blur(4px)',
+                backgroundColor: 'rgba(128, 128, 128, 0.3)',
                 padding: '20px',
             }}
         >
-            <h1 className='w-[60vw] lg:w-[30vw] text-[50px]'>{movie.title}</h1>
-            <h1 className='w-[70vw] lg:w-[30vw] mb-5'>{movie.overview}</h1>
-            <a className="flex w-fit rounded mb-5 p-5 bg-[#333333]" href={`/movie/${movie.id}`}>See Details</a>
+            <h1 className='w-[60vw] lg:w-[30vw] text-[40px]'>{movie.title}</h1>
+            <h1 className='w-[70vw] lg:w-[30vw] mb-5 line-clamp-2'>{movie.overview}</h1>
+            <a className="flex w-fit rounded mb-5 p-3 bg-[#333333]" href={`/movie/${movie.id}`}>See Details</a>
         </div>
     );
 };

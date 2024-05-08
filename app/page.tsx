@@ -5,11 +5,11 @@ import TopMovies from "@/components/page/home/TopMovies";
 
 export default async function Home() {
   return (
-    <div>
+    <>
       <Navbar />
       <Banner />
       <PopularMovies />
       <TopMovies />
-    </div>
+    </>
   );
 }

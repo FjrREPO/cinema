@@ -61,20 +61,39 @@ const TopMovies = () => {
         <div>
             <h1 className="mt-[50px] mb-[10px] text-[50px]">TOP MOVIES</h1>
             <Swiper
-                slidesPerView={5}
-                spaceBetween={50}
+                slidesPerView="auto"
+                spaceBetween={20}
                 pagination={{
                     clickable: true,
                 }}
                 modules={[Pagination, Navigation]}
                 navigation={true}
+                breakpoints={{
+                    320: {
+                        slidesPerView: 2,
+                        spaceBetween: 10,
+                    },
+                    480: {
+                        slidesPerView: 3,
+                        spaceBetween: 15,
+                    },
+                    768: {
+                        slidesPerView: 4,
+                        spaceBetween: 20,
+                    },
+                    1024: {
+                        slidesPerView: 5,
+                        spaceBetween: 25,
+                    },
+                }}
             >
                 {popularMovies.map((result, index) => (
-                    <SwiperSlide key={index} className=''>
+                    <SwiperSlide key={index} className="px-2">
                         <a href={`/movie/${result.id}`}>
                             <img
                                 src={`https://image.tmdb.org/t/p/w500${result.poster_path}`}
-                                className='w-[240px] rounded'
+                                className="w-full rounded"
+                                style={{ maxHeight: 300 }}
                             />
                         </a>
                     </SwiperSlide>

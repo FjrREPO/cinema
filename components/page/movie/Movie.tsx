@@ -42,7 +42,7 @@ const MovieDetails = async ({ params }: { params: MovieParams }) => {
                     <img
                         src={`https://image.tmdb.org/t/p/w500${movieData.poster_path}`}
                         className="rounded-lg"
-                        style={{ width: '100%', height: '90vh' }}
+                        style={{ width: '25vw', height: '100%' }}
                         alt=""
                     />
                     <div className="p-2 h-fit rounded-[20px]"

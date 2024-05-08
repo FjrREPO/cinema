@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { fetchTopMovies } from '@/components/api';
+import { fetchTopMovies } from '@/components/data/api';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   try {
