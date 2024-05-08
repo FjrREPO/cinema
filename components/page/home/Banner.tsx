@@ -12,7 +12,7 @@ import CarouselItem from '@/components/element/Carousel';
 const TMDB_TOKEN = process.env.NEXT_PUBLIC_TMDB_TOKEN;
 
 interface Movie {
-  backdrop_path: any;
+  backdrop_path: string;
   poster_path?: string;
   title: string;
   overview: string;
@@ -38,6 +38,7 @@ const fetchTopMovies = async (): Promise<Movie[]> => {
     const data: { results: Movie[] } = await res.json();
     return data.results.slice(0, 5);
   } catch (error) {
+    console.error(error);
     throw error;
   }
 };
@@ -50,16 +51,12 @@ const Banner = () => {
 
   useEffect(() => {
     fetchTopMovies()
-      .then((movies) => setTopMovies(movies))
-      .catch((error) => setError(true));
+     .then((movies) => setTopMovies(movies))
+     .catch((error) => {
+        console.error(error);
+        setError(true);
+      });
   }, []);
-
-  const removeImage = (index: number) => {
-    const imageElement = document.getElementById(`image-${index}`);
-    if (imageElement) {
-      imageElement.remove();
-    }
-  };
 
   const handleSlideChange = (swiper: any) => {
     setCurrentImageIndex(swiper.realIndex);
@@ -111,11 +108,6 @@ const Banner = () => {
           </SwiperSlide>
         ))}
       </Swiper>
-      {useEffect(() => {
-        if (currentImageIndex > 0) {
-          removeImage(currentImageIndex - 1);
-        }
-      }, [currentImageIndex])}
     </>
   );
 };

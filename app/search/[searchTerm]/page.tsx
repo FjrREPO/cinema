@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import SearchCard from '@/components/page/search/SearchCard';
-import { useState, useEffect } from 'react';
+import SearchCard from "@/components/page/search/SearchCard";
+import { useState, useEffect } from "react";
 import { IoMdArrowRoundBack } from "react-icons/io";
 
 const API_KEY = process.env.NEXT_PUBLIC_TMDB_API
@@ -33,7 +33,7 @@ const SearchPage = ({ params }: SearchPageProps) => {
                 const data = await response.json();
                 setMovies(data.results);
             } catch (error) {
-                setError('Failed to fetch movies. Please try again later.');
+                setError("Failed to fetch movies. Please try again later.");
             }
         };
         fetchMovies();
@@ -49,11 +49,11 @@ const SearchPage = ({ params }: SearchPageProps) => {
 
     return (
         <div>
-            <button className='absolute top-[5%] left-[2%]'>
-                <a href="/"><IoMdArrowRoundBack className='w-[50px] h-[50px]' /></a>
+            <button className="absolute top-[5%] left-[2%]">
+                <a href="/"><IoMdArrowRoundBack className="w-[50px] h-[50px]" /></a>
             </button>
             <div className="flex text-xl justify-center mt-10 mb-10">Search Result for : "{params.searchTerm}"</div>
-            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-items-center gap-10 mx-[5vw]'>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-items-center gap-10 mx-[5vw]">
                 {movies.map((movie) => (
                     <div key={movie.id}>
                         <SearchCard movie={movie} />

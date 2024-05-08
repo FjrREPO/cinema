@@ -60,8 +60,8 @@ const GenreFilter = () => {
             }}
         >
             <option value="">Select Genre</option>
-            {genres.map(genre => (
-                <option value={genre.id}>
+            {genres.map((genre: any, index) => (
+                <option key={index} value={genre.id}>
                     {genre.name}
                 </option>
             ))}
