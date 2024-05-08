@@ -49,7 +49,7 @@ function LoginPage() {
                         Sign in with Google
                     </button>
                     <div className="text-center text-gray-400">
-                        Dont"have an account?
+                        Dont have an account?
                         <span className="font-bold text-white">Sign up for free</span>
                     </div>
                 </div>
@@ -63,8 +63,8 @@ function LoginPage() {
                         className="absolute hidden bottom-10 right-6 p-6 bg-white bg-opacity-30 backdrop-blur-sm rounded drop-shadow-lg md:block"
                     >
                         <span className="text-white text-xl"
-                        >We"ve been uesing Untitle to kick"<br />start every new project
-                            and can"t <br />imagine working without it."
+                        >We been uesing Untitle to kick<br />start every new project
+                            and cant <br />imagine working without it.
                         </span>
                     </div>
                 </div>

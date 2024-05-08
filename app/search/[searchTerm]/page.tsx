@@ -52,7 +52,7 @@ const SearchPage = ({ params }: SearchPageProps) => {
             <button className="absolute top-[5%] left-[2%]">
                 <a href="/"><IoMdArrowRoundBack className="w-[50px] h-[50px]" /></a>
             </button>
-            <div className="flex text-xl justify-center mt-10 mb-10">Search Result for : "{params.searchTerm}"</div>
+            <div className="flex text-xl justify-center mt-10 mb-10">Search Result for : {params.searchTerm}</div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-items-center gap-10 mx-[5vw]">
                 {movies.map((movie) => (
                     <div key={movie.id}>
