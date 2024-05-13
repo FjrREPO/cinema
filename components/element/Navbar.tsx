@@ -16,7 +16,7 @@ function Navbar() {
                     }}
                 >
                     <div className="flex">
-                        <img src="https://res.cloudinary.com/dutlw7bko/image/upload/v1715232838/Cinema/Logo/nigga1_q02axu.png" className="w-[120px] mt-[-15px] mb-[-30px] w-fit" alt="" />
+                        <img src="https://res.cloudinary.com/dutlw7bko/image/upload/v1715232136/Cinema/Logo/cinema1_pman5x.png" className="w-[80px] w-fit" alt="" />
                     </div>
                     <SearchBox />
                     <div className="flex flex-row gap-5 items-center">
