@@ -225,10 +225,14 @@ function Payment() {
                                         <input type="number" placeholder="Number"
                                             className="px-4 py-3.5 bg-white text-[#333] w-full text-sm outline-none" required />
                                     </div>
-                                    <div className="grid grid-cols-2 gap-6">
-                                        <input type="number" placeholder="CVV (Opsional)"
-                                            className="px-4 py-3.5 bg-white text-[#333] w-full text-sm border-b-2 focus:border-[#333] outline-none" />
-                                    </div>
+                                    {selectedMethod === 'bri' || selectedMethod === 'bca' || selectedMethod === 'bni' ? 
+                                        <div className="grid grid-cols-2 gap-6">
+                                            <input type="number" placeholder="CVV"
+                                                className="px-4 py-3.5 bg-white text-[#333] w-full text-sm border-b-2 focus:border-[#333] outline-none" />
+                                        </div>
+                                        :
+                                        <></>
+                                    }
                                     <div className="flex items-center">
                                         <input id="remember-me" name="remember-me" type="checkbox" className="h-4 w-4 shrink-0 text-blue-600 focus:ring-blue-500 border-gray-300 rounded" required />
                                         <label htmlFor="remember-me" className="ml-3 block text-sm">

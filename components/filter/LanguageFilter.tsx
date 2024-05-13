@@ -55,7 +55,7 @@ const LanguageFilter = () => {
                 padding: '10px',
             }}
         >
-            <option value="">Select Language</option>
+            <option value="">Search by Language</option>
             {languages.map((language: any, index: any) => (
                 <option key={index} value={language.iso_639_1}>
                     {language.english_name}

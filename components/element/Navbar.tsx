@@ -1,23 +1,28 @@
 import SearchBox from "@/components/element/SearchBox";
 import LanguageFilter from "@/components/filter/LanguageFilter";
 import GenreFilter from "@/components/filter/GenreFilter";
+import { IoPersonCircleSharp } from "react-icons/io5";
+import { IoNotificationsCircle } from "react-icons/io5";
+import { MdOutlineLocalPlay } from 'react-icons/md';
 
 function Navbar() {
 
     return (
         <div>
             <div className="absolute inset-0 z-30 h-fit">
-                <div className="flex flex-row w-full justify-between p-5 items-center"
+                <div className="flex flex-row w-full justify-between py-5 px-7 items-center"
                     style={{
                         backgroundColor: 'rgba(128, 128, 128, 0.2)',
                     }}
                 >
                     <div className="flex">
-                        <img src="https://w7.pngwing.com/pngs/989/129/png-transparent-google-logo-google-search-meng-meng-company-text-logo.png" width="60px" alt="" />
+                        <img src="https://res.cloudinary.com/dutlw7bko/image/upload/v1715232838/Cinema/Logo/nigga1_q02axu.png" className="w-[120px] mt-[-15px] mb-[-30px] w-fit" alt="" />
                     </div>
                     <SearchBox />
-                    <div>
-                        <a href="/login">Login</a>
+                    <div className="flex flex-row gap-5 items-center">
+                        <a href="#"><MdOutlineLocalPlay className="w-[40px] h-[40px] duration-300 hover:text-[#d4b60f]"/></a>
+                        <a href="#"><IoNotificationsCircle className="w-[40px] h-[40px] duration-300 hover:text-[#d4b60f]"/></a>
+                        <a href="/login"><IoPersonCircleSharp className="w-[40px] h-[40px] duration-300 hover:text-[#d4b60f]"/></a>
                     </div>
                 </div>
                 <div className="flex flex-row w-full justify-between px-5"

@@ -1,5 +1,4 @@
 import Trailer from '@/components/data/Trailer';
-import { IoMdArrowRoundBack } from "react-icons/io";
 
 interface MovieParams {
     id: string;
@@ -33,9 +32,6 @@ const MovieDetails = async ({ params }: { params: MovieParams }) => {
             }}
         >
             <div className='bg-black/50 min-h-[100vh]'>
-                <button className='absolute top-[5%] left-[2%]'>
-                    <a href="/"><IoMdArrowRoundBack className='w-[50px] h-[50px]' /></a>
-                </button>
                 <div
                     className="p-4 md:pt-8 flex flex-col md:flex-row content-center max-w-6xl mx-auto md:space-x-6"
                 >

@@ -1,7 +1,8 @@
 'use client'
 
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { MdOutlineLocalFireDepartment, MdOutlineLocalPlay } from "react-icons/md";
+import { IoPlay } from "react-icons/io5";
+import { MdOutlineLocalPlay } from "react-icons/md";
 
 import 'swiper/css'; import 'swiper/css/effect-coverflow'; import 'swiper/css/pagination';
 import 'swiper/css';
@@ -18,7 +19,7 @@ interface Movie {
     id: number;
 }
 
-const TopMovies = () => {
+const NowPlayingMovies = () => {
     const TMDB_TOKEN = process.env.NEXT_PUBLIC_TMDB_TOKEN;
     const MAX_POPULAR_MOVIES = 20;
 
@@ -28,7 +29,7 @@ const TopMovies = () => {
     const fetchPopularMovies = async () => {
         try {
             const res = await fetch(
-                `https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1`,
+                `https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=2`,
                 {
                     headers: {
                         accept: 'application/json',
@@ -60,7 +61,7 @@ const TopMovies = () => {
 
     return (
         <div className='ml-5 mr-5'>
-            <h1 className="mt-[50px] mb-[10px] text-[30px] font-bold">TOP MOVIES</h1>
+            <h1 className="mt-[50px] mb-[10px] text-[30px] font-bold">NOW PLAYING</h1>
             <Swiper
                 slidesPerView="auto"
                 spaceBetween={20}
@@ -100,7 +101,7 @@ const TopMovies = () => {
                                 <MdOutlineLocalPlay className='w-10 h-10 text-[#d4b60f] cursor-pointer hover:text-[#fff] duration-300' />
                             </div>
                             <div className='absolute top-0 right-0 bg-black p-3 rounded-bl-[20px]'>
-                                <MdOutlineLocalFireDepartment className='w-10 h-10 text-[#f20a25]' />
+                                <IoPlay className='w-10 h-10 text-[#38c400]' />
                             </div>
                         </a>
                     </SwiperSlide>
@@ -110,4 +111,4 @@ const TopMovies = () => {
     );
 };
 
-export default TopMovies;
+export default NowPlayingMovies;

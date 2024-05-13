@@ -8,6 +8,7 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import { useEffect, useState } from 'react';
 import { Navigation, Pagination } from 'swiper/modules';
+import { MdOutlineLocalPlay } from 'react-icons/md';
 
 interface Movie {
     backdrop_path: any;
@@ -58,8 +59,8 @@ const PopularMovies = () => {
     }
 
     return (
-        <div>
-            <h1 className="mt-[50px] mb-[10px] text-[50px]">POPULAR</h1>
+        <div className='ml-5 mr-5'>
+            <h1 className="mt-[50px] mb-[10px] text-[30px] font-bold">POPULAR</h1>
             <Swiper
                 slidesPerView="auto"
                 spaceBetween={20}
@@ -88,15 +89,18 @@ const PopularMovies = () => {
                 }}
             >
                 {popularMovies.map((result, index) => (
-                    <SwiperSlide key={index} className="px-2">
-                        <a href={`/movie/${result.id}`}>
-                            <img
-                                src={`https://image.tmdb.org/t/p/w500${result.poster_path}`}
-                                className="w-full rounded"
-                                style={{ maxWidth: 240 }}
-                            />
-                        </a>
-                    </SwiperSlide>
+                    <SwiperSlide key={index} className="px-2 relative">
+                    <a href={`/movie/${result.id}`} className="block relative">
+                        <img
+                            src={`https://image.tmdb.org/t/p/w500${result.poster_path}`}
+                            className="w-full rounded"
+                            alt={`Poster for ${result.title}`}
+                        />
+                        <div className='absolute top-0 left-0 bg-black p-3 rounded-br-[20px] hover:bg-[#d4b60f] hover:text-[#fff] duration-300'>
+                            <MdOutlineLocalPlay className='w-10 h-10 text-[#d4b60f] cursor-pointer hover:text-[#fff] duration-300' />
+                        </div>
+                    </a>
+                </SwiperSlide>
                 ))}
             </Swiper>
         </div>
